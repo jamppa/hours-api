@@ -1,0 +1,16 @@
+version: '2'
+services:
+  shell:
+    build: .
+    command: /bin/bash
+    volumes:
+      - ../:/app
+      - ~/.m2/:/home/hours/.m2/
+    ports:
+      - "8000:8000"
+
+  broker:
+    image: spotify/kafka
+    ports:
+      - "2181:2181"
+      - "9092:9092"
