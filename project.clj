@@ -9,7 +9,8 @@
                  [ring-middleware-format "0.7.2"]
                  [org.apache.kafka/kafka-clients "0.10.2.0"]
                  [com.stuartsierra/component "0.3.2"]
-                 [cheshire "5.7.0"]]
+                 [cheshire "5.7.0"]
+                 [slingshot "0.12.2"]]
   :main ^:skip-aot hours-api.core
   :target-path "target/%s"
   :profiles

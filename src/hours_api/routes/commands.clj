@@ -2,7 +2,6 @@
   (:require
     [compojure.core :refer :all]
     [ring.util.response :refer :all]
-    [hours-api.routes.utils :as utils]
     [hours-api.commands.customer :as customer-commands]))
 
 (defroutes customer-commands
