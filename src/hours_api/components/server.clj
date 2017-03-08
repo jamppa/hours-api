@@ -3,14 +3,14 @@
     [com.stuartsierra.component :as component]
     [ring.middleware.format :refer [wrap-restful-format]]
     [org.httpkit.server :as httpkit]
-    [hours-api.routes :as routes]))
+    [hours-api.api :as api]))
 
 (defn wrap-app-component [handler app]
   (fn [req]
     (handler (assoc req :app app))))
 
 (defn make-handler [app]
-  (-> routes/app-routes
+  (-> api/app-api
       (wrap-app-component app)
       (wrap-restful-format :formats [:json-kw])))
 

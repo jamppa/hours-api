@@ -1,6 +1,8 @@
 (ns hours-api.components.broker
-  (:require [com.stuartsierra.component :as component])
-  (:import [org.apache.kafka.clients.producer KafkaProducer]))
+  (:require
+    [com.stuartsierra.component :as component]
+    [cheshire.core :as cheshire])
+  (:import [org.apache.kafka.clients.producer KafkaProducer ProducerRecord]))
 
 (def configuration {
   "bootstrap.servers" "broker:9092"
@@ -14,6 +16,9 @@
 
 (defn- new-producer [configuration]
   (KafkaProducer. configuration))
+
+(defn- new-producer-record [topic message]
+  (ProducerRecord. topic message))
 
 (defrecord Broker [configuration]
   component/Lifecycle
@@ -31,3 +36,8 @@
 
 (defn new-broker []
   (Broker. configuration))
+
+(defn send-command [broker topic command]
+  (let [producer (:producer broker)
+        command-json (cheshire/generate-string command)]
+    (.send producer (new-producer-record topic command-json))))
