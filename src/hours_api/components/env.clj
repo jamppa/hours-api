@@ -5,7 +5,7 @@
   :http-server {
     :port 8000
   }
-  :broker {
+  :broker-producer {
     "bootstrap.servers" "broker:9092"
     "acks" "all"
     "retries" (int 0)
@@ -13,6 +13,13 @@
     "linger.ms" (int 1)
     "key.serializer" "org.apache.kafka.common.serialization.StringSerializer"
     "value.serializer" "org.apache.kafka.common.serialization.StringSerializer"
+  }
+  :broker-consumer {
+    "bootstrap.servers" "broker:9092"
+    "group.id" "hours-api"
+    "enable.auto.commit" "false"
+    "key.deserializer" "org.apache.kafka.common.serialization.StringDeserializer"
+    "value.deserializer" "org.apache.kafka.common.serialization.StringDeserializer"
   }
 })
 

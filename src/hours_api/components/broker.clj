@@ -2,42 +2,50 @@
   (:require
     [com.stuartsierra.component :as component]
     [cheshire.core :as cheshire])
-  (:import [org.apache.kafka.clients.producer KafkaProducer ProducerRecord]))
+  (:import
+    [org.apache.kafka.clients.producer KafkaProducer ProducerRecord]
+    [org.apache.kafka.clients.consumer KafkaConsumer ConsumerRecord]))
 
-(def configuration {
-  "bootstrap.servers" "broker:9092"
-  "acks" "all"
-  "retries" (int 0)
-  "batch.size" (int 16384)
-  "linger.ms" (int 1)
-  "key.serializer" "org.apache.kafka.common.serialization.StringSerializer"
-  "value.serializer" "org.apache.kafka.common.serialization.StringSerializer"
-  })
+(def ^:private pending-cmds-topic "pending-cmds")
+(def ^:private accepted-cmds-topic "accepted-cmds")
+(def ^:private failed-cmds-topic "failed-cmds")
 
-(defn- new-producer [configuration]
-  (KafkaProducer. configuration))
+(defn- new-producer [conf]
+  (KafkaProducer. conf))
+
+(defn- new-consumer [conf]
+  (KafkaConsumer. conf))
 
 (defn- new-producer-record [topic message]
   (ProducerRecord. topic message))
 
-(defrecord Broker [configuration]
+(defrecord Broker [env]
   component/Lifecycle
 
   (start [component]
     (println ";; Starting Broker")
-    (assoc component :producer (new-producer configuration)))
+    (assoc component
+      :producer (new-producer (get-in env [:config :broker-producer]))
+      :consumer (new-consumer (get-in env [:config :broker-consumer]))))
 
   (stop [component]
     (println ";; Stopping Broker")
-    (let [producer (:producer component)]
-      (.close producer))
-    (assoc component :producer nil))
+    (let [producer (:producer component)
+          consumer (:consumer component)]
+      (.close producer)
+      (.close consumer))
+    (assoc component
+      :producer nil
+      :consumer nil))
 )
 
 (defn new-broker []
-  (Broker. configuration))
+  (Broker. nil))
 
 (defn send-command [broker topic command]
   (let [producer (:producer broker)
         command-json (cheshire/generate-string command)]
     (.send producer (new-producer-record topic command-json))))
+
+(defn subscribe [broker handler & topics]
+  )

@@ -9,8 +9,8 @@
 (defn system []
   (component/system-map
     :env (new-env)
-    :broker (new-broker)
-    :app (component/using (new-app) [:env :broker])
+    :broker (component/using (new-broker) [:env])
+    :app (component/using (new-app) [:broker])
     :http-server (component/using (new-http-server) [:env :app])))
 
 (defn start []

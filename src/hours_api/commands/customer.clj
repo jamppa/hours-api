@@ -5,7 +5,7 @@
     [clojure.spec :as s]
     [slingshot.slingshot :refer :all]))
 
-(def topic "customer")
+(def topic "pending-customer-cmds")
 (defmulti handle (fn [broker command] (:type command)))
 
 (s/def ::customer-name string?)

@@ -1,6 +1,7 @@
 (ns hours-api.components.server
   (:require
     [com.stuartsierra.component :as component]
+    [compojure.core :refer :all]
     [ring.middleware.format :refer [wrap-restful-format]]
     [org.httpkit.server :as httpkit]
     [hours-api.api :as api]
@@ -11,10 +12,13 @@
     (handler (assoc req :app app))))
 
 (defn make-handler [app]
-  (-> api/app-api
+  (routes
+    (-> api/app-api
       (wrap-app-component app)
       (wrap-restful-format :formats [:json-kw])
-      (wrap-invalid-command-ex)))
+      (wrap-invalid-command-ex))
+    (-> api/app-ws
+      (wrap-app-component app))))
 
 (defrecord HttpServer [env app]
   component/Lifecycle
