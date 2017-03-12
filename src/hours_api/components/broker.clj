@@ -42,10 +42,10 @@
 (defn new-broker []
   (Broker. nil))
 
-(defn send-command [broker topic command]
+(defn send-command [broker command]
   (let [producer (:producer broker)
         command-json (cheshire/generate-string command)]
-    (.send producer (new-producer-record topic command-json))))
+    (.send producer (new-producer-record pending-cmds-topic command-json))))
 
-(defn subscribe [broker handler & topics]
+(defn subscribe [broker handler]
   )
