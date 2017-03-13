@@ -48,4 +48,7 @@
     (.send producer (new-producer-record pending-cmds-topic command-json))))
 
 (defn subscribe [broker handler]
-  )
+  (while true
+    (let [records (.poll (:consumer broker) 100)]
+      (doseq [record records]
+        (handler record)))))

@@ -17,7 +17,7 @@
   :broker-consumer {
     "bootstrap.servers" "broker:9092"
     "group.id" "hours-api"
-    "enable.auto.commit" "false"
+    "enable.auto.commit" "true"
     "key.deserializer" "org.apache.kafka.common.serialization.StringDeserializer"
     "value.deserializer" "org.apache.kafka.common.serialization.StringDeserializer"
   }

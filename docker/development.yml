@@ -15,4 +15,4 @@ services:
       - "2181:2181"
       - "9092:9092"
     environment:
-      - TOPICS=pending-customer-cmds
+      - TOPICS=pending-cmds,accepted-cmds,failed-cmds
