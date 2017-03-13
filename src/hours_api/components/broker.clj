@@ -14,7 +14,8 @@
   (KafkaProducer. conf))
 
 (defn- new-consumer [conf]
-  (KafkaConsumer. conf))
+  (doto (KafkaConsumer. conf)
+    (.subscribe [accepted-cmds-topic failed-cmds-topic])))
 
 (defn- new-producer-record [topic message]
   (ProducerRecord. topic message))
