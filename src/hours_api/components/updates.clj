@@ -2,7 +2,7 @@
   (:require
     [com.stuartsierra.component :as component]
     [org.httpkit.server :refer [send!]]
-    [hours-api.components.broker :refer [subscribe]]))
+    [hours-api.components.broker :refer [poll]]))
 
 (defonce ^:private channels (atom #{}))
 
@@ -23,7 +23,7 @@
   component/Lifecycle
 
   (start [component]
-    (future (subscribe broker handle-event)))
+    (future (poll broker handle-event)))
 
   (stop [component])
 )

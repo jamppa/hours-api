@@ -8,8 +8,9 @@
 (defmulti handle (fn [broker command] (:type command)))
 
 (s/def ::customer-name string?)
+(s/def ::customer-business-id string?)
 (s/def ::create-customer-spec
-  (s/keys :req-un [::customer-name]))
+  (s/keys :req-un [::customer-name ::customer-business-id]))
 
 (defmethod handle :default [broker command]
   (throw+ (utils/invalid-command-ex)))
