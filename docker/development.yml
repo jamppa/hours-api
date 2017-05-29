@@ -1,13 +1,15 @@
-version: '2'
+version: '3'
 services:
-  shell:
+
+  hours-api:
     build: .
-    command: /bin/bash
     volumes:
       - ../:/app
       - ~/.m2/:/home/hours/.m2/
     ports:
       - "8000:8000"
+    environment:
+      - BROKER_HOST=broker:9092
 
   broker:
     image: spotify/kafka
@@ -15,4 +17,4 @@ services:
       - "2181:2181"
       - "9092:9092"
     environment:
-      - TOPICS=pending-cmds,accepted-cmds,failed-cmds
+      - TOPICS=pending-cmds,succeed-cmds,failed-cmds
