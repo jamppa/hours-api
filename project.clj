@@ -10,7 +10,8 @@
                  [org.apache.kafka/kafka-clients "0.10.2.0"]
                  [com.stuartsierra/component "0.3.2"]
                  [cheshire "5.7.0"]
-                 [slingshot "0.12.2"]]
+                 [slingshot "0.12.2"]
+                 [environ "1.1.0"]]
   :main ^:skip-aot hours-api.core
   :target-path "target/%s"
   :profiles
