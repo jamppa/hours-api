@@ -12,6 +12,10 @@
 (s/def ::create-customer-spec
   (s/keys :req-un [::customer-name ::customer-business-id]))
 
+(defrecord CreateCustomerCommand [type data])
+(defn new-create-customer-cmd [data]
+  (map->CreateCustomerCommand {:type "create-customer" :data data}))
+
 (defmethod handle :default [broker command]
   (throw+ (utils/invalid-command-ex)))
 
