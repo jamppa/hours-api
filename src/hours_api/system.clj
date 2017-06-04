@@ -15,5 +15,10 @@
     :app (component/using (new-app) [:broker])
     :http-server (component/using (new-http-server) [:env :app])))
 
+(defn test-system []
+  (component/system-map
+    :env (new-env)
+    :broker (component/using (new-broker) [:env])))
+
 (defn start []
   (component/start (system)))
