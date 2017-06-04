@@ -21,6 +21,11 @@
     (merge valid-data {:customer-name nil})))
 
 
+(def invalid-cmd-missing-business-id
+  (customer/new-create-customer-cmd
+    (merge valid-data {:customer-business-id nil})))
+
+
 (fact "valid create customer -command is sent to broker"
   (customer/handle broker-component valid-cmd) => anything
     (provided
@@ -31,3 +36,9 @@
   (customer/handle broker-component invalid-cmd-missing-name) => (throws Throwable)
   (provided
     (broker/send-command anything anything) => anything :times 0))
+
+
+(fact "create customer -command missing business id name fails"
+  (customer/handle broker-component invalid-cmd-missing-business-id) => (throws Throwable)
+  (provided
+    (broker/send-command anything anything) => irrelevant :times 0))
