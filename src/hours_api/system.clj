@@ -18,7 +18,8 @@
 (defn test-system []
   (component/system-map
     :env (new-env)
-    :broker (component/using (new-broker) [:env])))
+    :broker (component/using (new-broker) [:env])
+    :app (component/using (new-app) [:broker])))
 
 (defn start []
   (component/start (system)))

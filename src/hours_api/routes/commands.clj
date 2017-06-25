@@ -7,7 +7,9 @@
 (defroutes customer-commands
   (POST "/customer" [request :as {app :app command :params}]
     (customer-commands/handle (:broker app) command)
-    (response command)))
+    (->
+      (response command)
+      (status 200))))
 
 (defroutes commands
   (context "/commands" [] customer-commands))
