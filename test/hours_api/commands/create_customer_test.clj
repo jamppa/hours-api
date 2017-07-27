@@ -32,13 +32,13 @@
       (broker/send-command broker-component valid-cmd) => anything))
 
 
-(fact "create customer -command missing customer name fails"
+(fact "invalid create customer -command missing customer name fails and is not sent to broker"
   (customer/handle broker-component invalid-cmd-missing-name) => (throws Throwable)
   (provided
     (broker/send-command anything anything) => anything :times 0))
 
 
-(fact "create customer -command missing business id name fails"
+(fact "invalid create customer -command missing business id name fails and is not sent to broker"
   (customer/handle broker-component invalid-cmd-missing-business-id) => (throws Throwable)
   (provided
     (broker/send-command anything anything) => irrelevant :times 0))
