@@ -23,10 +23,12 @@
   component/Lifecycle
 
   (start [component]
+    (println ";; Starting Updates")
     (future (poll broker handle-event)))
 
-  (stop [component])
-)
+  (stop [component]
+    (println ";; Stopping Updates")))
+
 
 (defn new-updates []
   (Updates. nil))

@@ -6,10 +6,8 @@
     [hours-api.system :as system]))
 
 (def broker-component (:broker (system/test-system)))
-(def valid-data {
-    :customer-name "Firma Oy"
-    :customer-business-id "12345467-8"
-  })
+(def valid-data {:customer-name "Firma Oy"
+                 :customer-business-id "12345467-8"})
 
 
 (def valid-cmd

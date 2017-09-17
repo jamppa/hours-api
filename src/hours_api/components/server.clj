@@ -25,15 +25,15 @@
 
   (start [component]
     (println ";; Starting Http Server")
-      (assoc component :server
-        (httpkit/run-server
-          (make-handler app) (get-in env [:config :http-server]))))
+    (assoc component :server
+      (httpkit/run-server
+        (make-handler app) (get-in env [:config :http-server]))))
 
   (stop [{:keys [server] :as component}]
     (println ";; Stopping Http Server")
     (when server (server))
-    (assoc component :server nil))
-)
+    (assoc component :server nil)))
+
 
 (defn new-http-server []
   (HttpServer. nil nil))

@@ -37,8 +37,8 @@
       (.close consumer))
     (assoc component
       :producer nil
-      :consumer nil))
-)
+      :consumer nil)))
+
 
 (defn new-broker []
   (Broker. nil))

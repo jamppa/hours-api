@@ -13,6 +13,7 @@
   (s/keys :req-un [::customer-name ::customer-business-id]))
 
 (defrecord CreateCustomerCommand [type data])
+
 (defn new-create-customer-cmd [data]
   (map->CreateCustomerCommand {:type "create-customer" :data data}))
 

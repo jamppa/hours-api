@@ -7,7 +7,7 @@
 (defroutes app-api
   (context "/api" []
     commands-routes/commands))
-
+    
 (defroutes app-ws
   (context "/ws" []
     updates-routes/updates))
